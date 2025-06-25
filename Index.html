@@ -1,0 +1,82 @@
+<!-- signup.html - Page for creating a new account -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Signup</title>
+  <style>
+    body { font-family: Arial;
+	background: #f4f4f4;
+	margin: 0; padding: 0;
+	}
+    header { background: #34495e; 
+	color: white;
+	text-align: center;
+	padding: 20px;
+	}
+    section { max-width: 600px;
+	margin: auto;
+	background: white
+	; padding: 20px;
+	margin-top: 30px;
+	border-radius: 8px;
+	}
+    input[type=text], input[type=password], input[type=email], input[type=tel] {
+      width: 100%;
+	  padding: 8px;
+	  margin: 8px 0;
+	  border: 1px solid #ccc;
+	  border-radius: 4px;
+    }
+    button {
+      background: #3498db;
+	  color: white;
+	  padding: 10px 20px;
+	  border: none;
+      border-radius: 5px;
+	  cursor: pointer; 
+	  font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Online Learning Platform</h1>
+  </header>
+  <section>
+    <h2>Create Account</h2>
+    <form action="login.html" onsubmit="return createAccount()">
+      <input id="name" placeholder="Your Name" type="text" required />
+      <input id="email" placeholder="Email" type="email" required />
+      <input id="phone" placeholder="Phone Number" type="tel" required />
+      <input id="password1" placeholder="Password" type="password" required />
+      <input id="password2" placeholder="Confirm Password" type="password" required />
+      <button type="submit">Create Account</button>
+    </form>
+    <p>Already have an account? <a href="login.html">Login here</a></p>
+  </section>
+
+  <script>
+    function createAccount() {
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+      const pass1 = document.getElementById('password1').value;
+      const pass2 = document.getElementById('password2').value;
+
+      if (!email.includes('@')) { alert("Email must include @"); return false; }
+      if (phone.length < 10) { alert("Phone number is too short"); return false; }
+      if (pass1 !== pass2) { alert("Passwords do not match"); return false; }
+
+      localStorage.setItem('name', name);
+      localStorage.setItem('email', email);
+      localStorage.setItem('phone', phone);
+      localStorage.setItem('password', pass1);
+
+      alert("Account created! Redirecting to login...");
+      return true;
+    }
+  </script>
+</body>
+</html>
