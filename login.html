@@ -1,0 +1,51 @@
+<!-- login.html - User Login Page -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+  <style>
+    body { font-family: Arial; background: #f4f4f4; margin: 0; padding: 0; }
+    header { background: #34495e; color: white; text-align: center; padding: 20px; }
+    section { max-width: 600px; margin: auto; background: white; padding: 20px; margin-top: 30px; border-radius: 8px; }
+    input[type=text], input[type=password] {
+      width: 100%; padding: 8px; margin: 8px 0; border: 1px solid #ccc; border-radius: 4px;
+    }
+    button {
+      background: #3498db; color: white; padding: 10px 20px; border: none;
+      border-radius: 5px; cursor: pointer; font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Login</h1>
+  </header>
+  <section>
+    <h2>Welcome Back</h2>
+    <form onsubmit="return login()">
+      <input id="loginUser" placeholder="Username or Email" type="text" required />
+      <input id="loginPass" placeholder="Password" type="password" required />
+      <button type="submit">Login</button>
+    </form>
+    <p>Don't have an account? <a href="signup.html">Sign up here</a></p>
+  </section>
+
+  <script>
+    function login() {
+      const u = document.getElementById('loginUser').value;
+      const p = document.getElementById('loginPass').value;
+
+      if ((u === localStorage.getItem('email') || u === localStorage.getItem('name')) && p === localStorage.getItem('password')) {
+        alert("Login successful!");
+        window.location.href = 'courses.html';
+        return false;
+      } else {
+        alert("Wrong login!");
+        return false;
+      }
+    }
+  </script>
+</body>
+</html>
