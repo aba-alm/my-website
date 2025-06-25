@@ -1,0 +1,91 @@
+<!-- profile.html - Shows user profile and earned certificate -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Profile</title>
+  <style>
+    body {
+	font-family: Arial;
+	background: #f4f4f4;
+	margin: 0; 
+	padding: 0; 
+	}
+    header {
+	background: #34495e; 
+	color: white;
+	text-align: center;
+	padding: 20px;
+	}
+    nav { 
+	text-align: center;
+	background: #ecf0f1;
+	padding: 10px;
+	}
+    nav a {
+	margin: 0 15px; 
+	text-decoration: none; 
+	color: #2c3e50; 
+	font-weight: bold; 
+	}
+    section {
+      max-width: 700px;
+	  margin: auto;
+	  background: white;
+	  padding: 20px;
+      margin-top: 30px;
+	  border-radius: 8px;
+	  text-align: left;
+    }
+    img.profile-pic {
+	border-radius: 50%;
+	width: 80px;
+	display: block;
+	margin-bottom: 20px;
+	}
+    .cert { 
+	width: 100%;
+	border-radius: 8px;
+	margin-top: 15px;
+	}
+    .back-arrow {
+	display: block;
+	margin-bottom: 20px;
+	color: #3498db;
+	font-weight: bold;
+	text-decoration: none;
+	}
+	
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Your Profile</h1>
+  </header>
+  <nav>
+    <a href="courses.html">Courses</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="profile.html">Profile</a>
+  </nav>
+  <section>
+    <a href="courses.html" class="back-arrow">← Back to Courses</a>
+    <img src="Pic2.png" alt="Profile Picture" class="profile-pic">
+    <p><strong>Name:</strong> <span id="profName">-</span></p>
+    <p><strong>Email:</strong> <span id="profEmail">-</span></p>
+    <p><strong>Phone:</strong> <span id="profPhone">-</span></p>
+    <p><strong>Level:</strong> Beginner</p>
+    <h3>📜 My Certificates:</h3>
+    <img src="Pic1.png"< width="200"/><br/> 
+  </section>
+
+  <script>
+    document.getElementById('profName').innerText = localStorage.getItem('name') || '-';
+    document.getElementById('profEmail').innerText = localStorage.getItem('email') || '-';
+    document.getElementById('profPhone').innerText = localStorage.getItem('phone') || '-';
+    if (localStorage.getItem('certificateEarned') === 'true') {
+    }
+  </script>
+</body>
+</html>
