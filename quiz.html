@@ -1,0 +1,152 @@
+<!-- quiz.html - HTML Basics Quiz Page -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML Quiz</title>
+  <style>
+    body { 
+	font-family: Arial; 
+	background: #f4f4f4;
+	margin: 0; 
+	padding: 0;
+	}
+    header { 
+	background: #34495e;
+	color: white;
+	text-align: center;
+	padding: 20px;
+	}
+    nav { 
+	text-align: center;
+	background: #ecf0f1;
+	padding: 10px; 
+	}
+    nav a { 
+	margin: 0 15px;
+	text-decoration: none;
+	color: #2c3e50; 
+	font-weight: bold; 
+	}
+    section {
+	max-width: 700px;
+	margin: auto;
+	background: white;
+	padding: 20px;
+	margin-top: 30px; 
+	border-radius: 8px;
+	}
+    button {
+      background: #3498db;
+	  color: white; 
+	  padding: 10px 20px;
+	  border: none;
+      border-radius: 5px;
+	  cursor: pointer; 
+	  font-weight: bold;
+    }
+    .question { 
+	margin-bottom: 20px; 
+	}
+    .back-arrow { 
+	display: block;
+	color: #3498db;
+	margin-bottom: 20px;
+	text-decoration: none; 
+	font-weight: bold;
+	}
+	
+  </style>
+</head>
+<body>
+  <header><h1>HTML Basics Quiz</h1></header>
+  <nav>
+    <a href="courses.html">Courses</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="profile.html">Profile</a>
+  </nav>
+  <section>
+    <a href="courses.html" class="back-arrow">← Back to Courses</a>
+    <form id="quizForm" onsubmit="return submitQuiz()">
+     <div class="question">
+        <p>1. What does HTML stand for?</p>
+        <label><input type="radio" name="q1" value="correct"> HyperText Markup Language</label><br>
+        <label><input type="radio" name="q1" value="wrong"> HighText Markdown Language</label><br>
+        <label><input type="radio" name="q1" value="wrong"> HyperText Machine Language</label>
+      </div>
+      <div class="question">
+        <p>2. Which tag is used to create a hyperlink?</p>
+        <label><input type="radio" name="q2" value="correct"> &lt;a&gt;</label><br>
+        <label><input type="radio" name="q2" value="wrong"> &lt;link&gt;</label><br>
+        <label><input type="radio" name="q2" value="wrong"> &lt;href&gt;</label>
+      </div>
+      <div class="question">
+        <p>3. Which tag is used for headings?</p>
+        <label><input type="radio" name="q3" value="correct"> &lt;h1&gt;</label><br>
+        <label><input type="radio" name="q3" value="wrong"> &lt;head&gt;</label><br>
+        <label><input type="radio" name="q3" value="wrong"> &lt;heading&gt;</label>
+      </div>
+      <div class="question">
+        <p>4. What tag is used to insert an image?</p>
+        <label><input type="radio" name="q4" value="correct"> &lt;img&gt;</label><br>
+        <label><input type="radio" name="q4" value="wrong"> &lt;image&gt;</label><br>
+        <label><input type="radio" name="q4" value="wrong"> &lt;pic&gt;</label>
+      </div>
+      <div class="question">
+        <p>5. What does &lt;br&gt; do?</p>
+        <label><input type="radio" name="q5" value="correct"> Inserts a line break</label><br>
+        <label><input type="radio" name="q5" value="wrong"> Bold text</label><br>
+        <label><input type="radio" name="q5" value="wrong"> New paragraph</label>
+      </div>
+      <div class="question">
+        <p>6. Correct syntax for a paragraph?</p>
+        <label><input type="radio" name="q6" value="correct"> &lt;p&gt;This is a paragraph&lt;/p&gt;</label><br>
+        <label><input type="radio" name="q6" value="wrong"> &lt;paragraph&gt;This is a paragraph&lt;/paragraph&gt;</label><br>
+        <label><input type="radio" name="q6" value="wrong"> &lt;pg&gt;This is a paragraph&lt;/pg&gt;</label>
+      </div>
+      <div class="question">
+        <p>7. Which tag makes text bold?</p>
+        <label><input type="radio" name="q7" value="correct"> &lt;b&gt;</label><br>
+        <label><input type="radio" name="q7" value="wrong"> &lt;bold&gt;</label><br>
+        <label><input type="radio" name="q7" value="wrong"> &lt;strongtext&gt;</label>
+      </div>
+      <div class="question">
+        <p>8. What tag is used for lists?</p>
+        <label><input type="radio" name="q8" value="correct"> &lt;ul&gt;</label><br>
+        <label><input type="radio" name="q8" value="wrong"> &lt;li&gt;</label><br>
+        <label><input type="radio" name="q8" value="wrong"> &lt;list&gt;</label>
+      </div>
+      <div class="question">
+        <p>9. Which tag creates a table row?</p>
+        <label><input type="radio" name="q9" value="correct"> &lt;tr&gt;</label><br>
+        <label><input type="radio" name="q9" value="wrong"> &lt;td&gt;</label><br>
+        <label><input type="radio" name="q9" value="wrong"> &lt;table-row&gt;</label>
+      </div>
+      <div class="question">
+        <p>10. What tag defines a form?</p>
+        <label><input type="radio" name="q10" value="correct"> &lt;form&gt;</label><br>
+        <label><input type="radio" name="q10" value="wrong"> &lt;forms&gt;</label><br>
+        <label><input type="radio" name="q10" value="wrong"> &lt;f&gt;</label>
+      </div>
+      <button type="submit">Submit Quiz</button>
+    </form>
+  </section>
+
+  <script>
+    function submitQuiz() {
+      const form = document.getElementById("quizForm");
+      const correct = form.querySelectorAll('input[value="correct"]:checked').length;
+      if (correct >= 6) {
+        alert("Congratulations! You passed.");
+        localStorage.setItem('certificateEarned', 'true');
+        window.location.href = 'certificate.html';
+      } else {
+        alert("You did not pass. Try again.");
+      }
+      return false; // Always return false to prevent page reload
+    }
+  </script>
+</body>
+</html>
