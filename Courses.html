@@ -1,0 +1,83 @@
+<!-- courses.html - Page to show available courses -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Courses</title>
+  <style>
+    body { 
+	font-family: Arial;
+	background: #f4f4f4;
+	margin: 0; 
+	padding: 0;
+	}
+    header { 
+	background: #34495e;
+	color: white;
+	text-align: center;
+	padding: 20px;
+	}
+    nav { 
+	text-align: center; 
+	background: #ecf0f1;
+	padding: 10px; 
+	}
+    nav a { 
+	margin: 0 15px;
+	text-decoration: none;
+	color: #2c3e50;
+	font-weight: bold;
+	}
+    .course-card {
+      display: inline-block;
+	  width: 250px;
+	  margin: 10px;
+      background: white;
+	  border-radius: 8px;
+	  padding: 10px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+	  vertical-align: top;
+    }
+    img.course-img { 
+	width: 100%; 
+	border-radius: 5px;
+	}
+    h2 {
+	text-align: center;
+	margin-top: 30px; }
+	
+  </style>
+</head>
+<body>
+  <header><h1>Available Courses</h1></header>
+  <nav>
+    <a href="courses.html">Courses</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="profile.html">Profile</a>
+  </nav>
+  <h2>Select a Course</h2>
+
+  <!-- Course card for HTML -->
+  <div class="course-card" onclick="location.href='quiz.html'">
+    <img src="Course1.png" class="course-img" alt="HTML"/>
+    <h3>HTML Basics</h3>
+    <p>Learn the structure of websites. Duration: 2 hours</p>
+  </div>
+
+  <!-- Course card for CSS -->
+  <div class="course-card">
+    <img src="Course2.png" class="course-img" alt="CSS"/>
+    <h3>CSS Design</h3>
+    <p>Style your pages. Duration: 3 hours</p>
+  </div>
+
+  <!-- Course card for JavaScript -->
+  <div class="course-card">
+    <img src="Course3.png" class="course-img" alt="JavaScript"/>
+    <h3>HTML</h3>
+    <p>Make your pages interactive. Duration: 2 hours</p>
+  </div>
+</body>
+</html>
