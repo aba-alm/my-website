@@ -16,57 +16,12 @@
       border-radius: 5px; cursor: pointer; font-weight: bold;
     }
   </style>
-
-  <!-- Firebase App & Firestore -->
- <!-- signup.html -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyD2out7Gek8a9cGVy4PiS9tRG-gqMRVGkU",
-    authDomain: "newserver4044.firebaseapp.com",
-    projectId: "newserver4044",
-    storageBucket: "newserver4044.appspot.com",
-    messagingSenderId: "708432924130",
-    appId: "1:708432924130:web:517c576d05e9d4de04bdbb"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  window.createAccount = async function () {
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const phone = document.getElementById('phone').value;
-    const pass1 = document.getElementById('password1').value;
-    const pass2 = document.getElementById('password2').value;
-
-    if (!email.includes('@')) { alert("Email must include @"); return false; }
-    if (phone.length < 10) { alert("Phone number is too short"); return false; }
-    if (pass1 !== pass2) { alert("Passwords do not match"); return false; }
-
-    try {
-      await addDoc(collection(db, "users"), {
-        name, email, phone, password: pass1
-      });
-      alert("Account saved in database! Now go to login page.");
-      return true;
-    } catch (e) {
-      alert("Error saving user: " + e.message);
-      return false;
-    }
-  };
-</script>
-
 </head>
 <body>
-  <header>
-    <h1>Online Learning Platform</h1>
-  </header>
+  <header><h1>Signup</h1></header>
   <section>
     <h2>Create Account</h2>
-    <form onsubmit="return createAccount()">
+    <form id="signupForm">
       <input id="name" placeholder="Your Name" type="text" required />
       <input id="email" placeholder="Email" type="email" required />
       <input id="phone" placeholder="Phone Number" type="tel" required />
@@ -76,5 +31,58 @@
     </form>
     <p>Already have an account? <a href="login.html">Login here</a></p>
   </section>
+
+  <!-- Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyD2out7Gek8a9cGVy4PiS9tRG-gqMRVGkU",
+      authDomain: "newserver4044.firebaseapp.com",
+      projectId: "newserver4044",
+      storageBucket: "newserver4044.appspot.com",
+      messagingSenderId: "708432924130",
+      appId: "1:708432924130:web:517c576d05e9d4de04bdbb",
+      measurementId: "G-RVGCD3ZFYF"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const form = document.getElementById("signupForm");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const phone = document.getElementById("phone").value;
+      const pass1 = document.getElementById("password1").value;
+      const pass2 = document.getElementById("password2").value;
+
+      if (!email.includes("@")) return alert("Email must include @");
+      if (phone.length < 10) return alert("Phone number too short");
+      if (pass1 !== pass2) return alert("Passwords do not match");
+
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, pass1);
+        const uid = userCredential.user.uid;
+
+        await setDoc(doc(db, "users", uid), {
+          name: name,
+          email: email,
+          phone: phone
+        });
+
+        alert("Account created!");
+        window.location.href = "login.html";
+      } catch (err) {
+        alert("Error: " + err.message);
+      }
+    });
+  </script>
 </body>
 </html>
