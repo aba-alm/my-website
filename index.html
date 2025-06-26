@@ -1,9 +1,52 @@
+<!-- ✅ index.html - Signup Page -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Signup</title>
+  <link rel="stylesheet" href="style.css" />
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyD2out7Gek8a9cGVy4PiS9tRG-gqMRVGkU",
+      authDomain: "newserver4044.firebaseapp.com",
+      projectId: "newserver4044",
+      storageBucket: "newserver4044.appspot.com",
+      messagingSenderId: "708432924130",
+      appId: "1:708432924130:web:517c576d05e9d4de04bdbb"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    window.signup = async function () {
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const phone = document.getElementById("phone").value;
+      const pass1 = document.getElementById("password1").value;
+      const pass2 = document.getElementById("password2").value;
+
+      if (pass1 !== pass2) return alert("Passwords do not match");
+
+      try {
+        const userCred = await createUserWithEmailAndPassword(auth, email, pass1);
+        await setDoc(doc(db, "users", userCred.user.uid), {
+          name,
+          email,
+          phone
+        });
+        alert("Signup successful!");
+        window.location.href = "login.html";
+      } catch (e) {
+        alert("Error: " + e.message);
+      }
+    };
+  </script>
   <style>
     body { font-family: Arial; background: #f4f4f4; margin: 0; padding: 0; }
     header { background: #34495e; color: white; text-align: center; padding: 20px; }
@@ -18,10 +61,12 @@
   </style>
 </head>
 <body>
-  <header><h1>Signup</h1></header>
+  <header>
+    <h1>Online Learning Platform</h1>
+  </header>
   <section>
     <h2>Create Account</h2>
-    <form id="signupForm">
+    <form onsubmit="event.preventDefault(); signup();">
       <input id="name" placeholder="Your Name" type="text" required />
       <input id="email" placeholder="Email" type="email" required />
       <input id="phone" placeholder="Phone Number" type="tel" required />
@@ -31,57 +76,5 @@
     </form>
     <p>Already have an account? <a href="login.html">Login here</a></p>
   </section>
-
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
-    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyD2out7Gek8a9cGVy4PiS9tRG-gqMRVGkU",
-      authDomain: "newserver4044.firebaseapp.com",
-      projectId: "newserver4044",
-      storageBucket: "newserver4044.appspot.com",
-      messagingSenderId: "708432924130",
-      appId: "1:708432924130:web:517c576d05e9d4de04bdbb",
-      measurementId: "G-RVGCD3ZFYF"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    const form = document.getElementById("signupForm");
-
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault(); // ✅ Stop the form from reloading the page
-
-      const name = document.getElementById("name").value;
-      const email = document.getElementById("email").value;
-      const phone = document.getElementById("phone").value;
-      const pass1 = document.getElementById("password1").value;
-      const pass2 = document.getElementById("password2").value;
-
-      if (!email.includes("@")) return alert("Email must include @");
-      if (phone.length < 10) return alert("Phone number too short");
-      if (pass1 !== pass2) return alert("Passwords do not match");
-
-      try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, pass1);
-        const uid = userCredential.user.uid;
-
-        await setDoc(doc(db, "users", uid), {
-          name: name,
-          email: email,
-          phone: phone
-        });
-
-        alert("Account created!");
-        window.location.href = "login.html"; // ✅ Redirect to login page
-      } catch (err) {
-        alert("Error: " + err.message);
-      }
-    });
-  </script>
 </body>
 </html>
