@@ -79,5 +79,31 @@
     <h3>HTML</h3>
     <p>Make your pages interactive. Duration: 2 hours</p>
   </div>
+  
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyD2out7Gek8a9cGVy4PiS9tRG-gqMRVGkU",
+    authDomain: "newserver4044.firebaseapp.com",
+    projectId: "newserver4044",
+    storageBucket: "newserver4044.appspot.com",
+    messagingSenderId: "708432924130",
+    appId: "1:708432924130:web:517c576d05e9d4de04bdbb",
+    measurementId: "G-RVGCD3ZFYF"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      alert("You must log in first.");
+      window.location.href = "login.html";
+    }
+  });
+</script>
+
 </body>
 </html>
