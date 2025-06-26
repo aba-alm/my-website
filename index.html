@@ -32,7 +32,6 @@
     <p>Already have an account? <a href="login.html">Login here</a></p>
   </section>
 
-  <!-- Firebase -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
@@ -55,7 +54,7 @@
     const form = document.getElementById("signupForm");
 
     form.addEventListener("submit", async (e) => {
-      e.preventDefault();
+      e.preventDefault(); // ✅ Stop the form from reloading the page
 
       const name = document.getElementById("name").value;
       const email = document.getElementById("email").value;
@@ -78,7 +77,7 @@
         });
 
         alert("Account created!");
-        window.location.href = "login.html";
+        window.location.href = "login.html"; // ✅ Redirect to login page
       } catch (err) {
         alert("Error: " + err.message);
       }
