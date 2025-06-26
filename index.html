@@ -1,4 +1,3 @@
-<!-- signup.html - Page for creating a new account -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,39 +5,60 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Signup</title>
   <style>
-    body { font-family: Arial;
-	background: #f4f4f4;
-	margin: 0; padding: 0;
-	}
-    header { background: #34495e; 
-	color: white;
-	text-align: center;
-	padding: 20px;
-	}
-    section { max-width: 600px;
-	margin: auto;
-	background: white
-	; padding: 20px;
-	margin-top: 30px;
-	border-radius: 8px;
-	}
+    body { font-family: Arial; background: #f4f4f4; margin: 0; padding: 0; }
+    header { background: #34495e; color: white; text-align: center; padding: 20px; }
+    section { max-width: 600px; margin: auto; background: white; padding: 20px; margin-top: 30px; border-radius: 8px; }
     input[type=text], input[type=password], input[type=email], input[type=tel] {
-      width: 100%;
-	  padding: 8px;
-	  margin: 8px 0;
-	  border: 1px solid #ccc;
-	  border-radius: 4px;
+      width: 100%; padding: 8px; margin: 8px 0; border: 1px solid #ccc; border-radius: 4px;
     }
     button {
-      background: #3498db;
-	  color: white;
-	  padding: 10px 20px;
-	  border: none;
-      border-radius: 5px;
-	  cursor: pointer; 
-	  font-weight: bold;
+      background: #3498db; color: white; padding: 10px 20px; border: none;
+      border-radius: 5px; cursor: pointer; font-weight: bold;
     }
   </style>
+
+  <!-- Firebase App & Firestore -->
+ <!-- signup.html -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyD2out7Gek8a9cGVy4PiS9tRG-gqMRVGkU",
+    authDomain: "newserver4044.firebaseapp.com",
+    projectId: "newserver4044",
+    storageBucket: "newserver4044.appspot.com",
+    messagingSenderId: "708432924130",
+    appId: "1:708432924130:web:517c576d05e9d4de04bdbb"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  window.createAccount = async function () {
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const pass1 = document.getElementById('password1').value;
+    const pass2 = document.getElementById('password2').value;
+
+    if (!email.includes('@')) { alert("Email must include @"); return false; }
+    if (phone.length < 10) { alert("Phone number is too short"); return false; }
+    if (pass1 !== pass2) { alert("Passwords do not match"); return false; }
+
+    try {
+      await addDoc(collection(db, "users"), {
+        name, email, phone, password: pass1
+      });
+      alert("Account saved in database! Now go to login page.");
+      return true;
+    } catch (e) {
+      alert("Error saving user: " + e.message);
+      return false;
+    }
+  };
+</script>
+
 </head>
 <body>
   <header>
@@ -46,7 +66,7 @@
   </header>
   <section>
     <h2>Create Account</h2>
-    <form action="login.html" onsubmit="return createAccount()">
+    <form onsubmit="return createAccount()">
       <input id="name" placeholder="Your Name" type="text" required />
       <input id="email" placeholder="Email" type="email" required />
       <input id="phone" placeholder="Phone Number" type="tel" required />
@@ -56,27 +76,5 @@
     </form>
     <p>Already have an account? <a href="login.html">Login here</a></p>
   </section>
-
-  <script>
-    function createAccount() {
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const phone = document.getElementById('phone').value;
-      const pass1 = document.getElementById('password1').value;
-      const pass2 = document.getElementById('password2').value;
-
-      if (!email.includes('@')) { alert("Email must include @"); return false; }
-      if (phone.length < 10) { alert("Phone number is too short"); return false; }
-      if (pass1 !== pass2) { alert("Passwords do not match"); return false; }
-
-      localStorage.setItem('name', name);
-      localStorage.setItem('email', email);
-      localStorage.setItem('phone', phone);
-      localStorage.setItem('password', pass1);
-
-      alert("Account created! Redirecting to login...");
-      return true;
-    }
-  </script>
 </body>
 </html>
