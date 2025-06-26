@@ -80,12 +80,44 @@
     <img src="Pic1.png"< width="200"/><br/> 
   </section>
 
-  <script>
-    document.getElementById('profName').innerText = localStorage.getItem('name') || '-';
-    document.getElementById('profEmail').innerText = localStorage.getItem('email') || '-';
-    document.getElementById('profPhone').innerText = localStorage.getItem('phone') || '-';
-    if (localStorage.getItem('certificateEarned') === 'true') {
+ <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
+  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyD2out7Gek8a9cGVy4PiS9tRG-gqMRVGkU",
+    authDomain: "newserver4044.firebaseapp.com",
+    projectId: "newserver4044",
+    storageBucket: "newserver4044.appspot.com",
+    messagingSenderId: "708432924130",
+    appId: "1:708432924130:web:517c576d05e9d4de04bdbb",
+    measurementId: "G-RVGCD3ZFYF"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      const docRef = doc(db, "users", user.uid);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        document.getElementById("profName").innerText = data.name;
+        document.getElementById("profEmail").innerText = user.email;
+        document.getElementById("profPhone").innerText = data.phone;
+      } else {
+        alert("User data not found.");
+      }
+    } else {
+      alert("Not logged in.");
+      window.location.href = "login.html";
     }
-  </script>
+  });
+</script>
+
 </body>
 </html>
