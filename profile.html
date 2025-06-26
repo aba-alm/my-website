@@ -1,4 +1,4 @@
-<!-- profile.html - Shows user profile and earned certificate -->
+<!-- ✅ profile.html - Firebase user profile with same design -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,58 +6,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Profile</title>
   <style>
-    body {
-	font-family: Arial;
-	background: #f4f4f4;
-	margin: 0; 
-	padding: 0; 
-	}
-    header {
-	background: #34495e; 
-	color: white;
-	text-align: center;
-	padding: 20px;
-	}
-    nav { 
-	text-align: center;
-	background: #ecf0f1;
-	padding: 10px;
-	}
-    nav a {
-	margin: 0 15px; 
-	text-decoration: none; 
-	color: #2c3e50; 
-	font-weight: bold; 
-	}
+    body { font-family: Arial; background: #f4f4f4; margin: 0; padding: 0; }
+    header { background: #34495e; color: white; text-align: center; padding: 20px; }
+    nav { text-align: center; background: #ecf0f1; padding: 10px; }
+    nav a { margin: 0 15px; text-decoration: none; color: #2c3e50; font-weight: bold; }
     section {
-      max-width: 700px;
-	  margin: auto;
-	  background: white;
-	  padding: 20px;
-      margin-top: 30px;
-	  border-radius: 8px;
-	  text-align: left;
+      max-width: 700px; margin: auto; background: white; padding: 20px;
+      margin-top: 30px; border-radius: 8px; text-align: left;
     }
-    img.profile-pic {
-	border-radius: 50%;
-	width: 80px;
-	display: block;
-	margin-bottom: 20px;
-	}
-    .cert { 
-	width: 100%;
-	border-radius: 8px;
-	margin-top: 15px;
-	}
-    .back-arrow {
-	display: block;
-	margin-bottom: 20px;
-	color: #3498db;
-	font-weight: bold;
-	text-decoration: none;
-	}
-	
+    img.profile-pic { border-radius: 50%; width: 80px; display: block; margin-bottom: 20px; }
+    .cert { width: 100%; border-radius: 8px; margin-top: 15px; }
+    .back-arrow { display: block; margin-bottom: 20px; color: #3498db; font-weight: bold; text-decoration: none; }
   </style>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyD2out7Gek8a9cGVy4PiS9tRG-gqMRVGkU",
+      authDomain: "newserver4044.firebaseapp.com",
+      projectId: "newserver4044"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    window.onload = async function () {
+      const uid = localStorage.getItem("uid");
+      if (!uid) return alert("Not logged in");
+
+      const docRef = doc(db, "users", uid);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        document.getElementById("profName").innerText = data.name;
+        document.getElementById("profEmail").innerText = data.email;
+        document.getElementById("profPhone").innerText = data.phone;
+      } else {
+        alert("User not found");
+      }
+    };
+  </script>
 </head>
 <body>
   <header>
@@ -77,47 +66,7 @@
     <p><strong>Phone:</strong> <span id="profPhone">-</span></p>
     <p><strong>Level:</strong> Beginner</p>
     <h3>📜 My Certificates:</h3>
-    <img src="Pic1.png"< width="200"/><br/> 
+    <img src="Pic1.png" class="cert" alt="Certificate" />
   </section>
-
- <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-auth.js";
-  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyD2out7Gek8a9cGVy4PiS9tRG-gqMRVGkU",
-    authDomain: "newserver4044.firebaseapp.com",
-    projectId: "newserver4044",
-    storageBucket: "newserver4044.appspot.com",
-    messagingSenderId: "708432924130",
-    appId: "1:708432924130:web:517c576d05e9d4de04bdbb",
-    measurementId: "G-RVGCD3ZFYF"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
-
-  onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      const docRef = doc(db, "users", user.uid);
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        const data = docSnap.data();
-        document.getElementById("profName").innerText = data.name;
-        document.getElementById("profEmail").innerText = user.email;
-        document.getElementById("profPhone").innerText = data.phone;
-      } else {
-        alert("User data not found.");
-      }
-    } else {
-      alert("Not logged in.");
-      window.location.href = "login.html";
-    }
-  });
-</script>
-
 </body>
 </html>
